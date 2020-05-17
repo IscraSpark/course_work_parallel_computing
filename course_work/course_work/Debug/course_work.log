@@ -1,0 +1,128 @@
+﻿Build started 16.05.2020 23:21:42.
+     1>Project "D:\Study\course_work\course_work\course_work\course_work.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt index.cpp
+         index.cpp
+     1>d:\study\course_work\course_work\course_work\index.cpp(28): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\program files (x86)\vc\include\tuple(746): error C2512: 'A' : no appropriate default constructor available
+                 c:\program files (x86)\vc\include\tuple(762) : see reference to function template instantiation 'std::pair<const _Kty,_Ty>::pair<std::tuple<std::basic_string<char,std::char_traits<char>,std::allocator<char>> &&>,std::tuple<>,0,>(_Tuple1 &,_Tuple2 &,std::_Arg_idx<0>,std::_Arg_idx<>)' being compiled
+                 with
+                 [
+                     _Kty=std::string
+         ,            _Ty=A
+         ,            _Tuple1=std::tuple<std::basic_string<char,std::char_traits<char>,std::allocator<char>> &&>
+         ,            _Tuple2=std::tuple<>
+                 ]
+                 c:\program files (x86)\vc\include\tuple(762) : see reference to function template instantiation 'std::pair<const _Kty,_Ty>::pair<std::tuple<std::basic_string<char,std::char_traits<char>,std::allocator<char>> &&>,std::tuple<>,0,>(_Tuple1 &,_Tuple2 &,std::_Arg_idx<0>,std::_Arg_idx<>)' being compiled
+                 with
+                 [
+                     _Kty=std::string
+         ,            _Ty=A
+         ,            _Tuple1=std::tuple<std::basic_string<char,std::char_traits<char>,std::allocator<char>> &&>
+         ,            _Tuple2=std::tuple<>
+                 ]
+                 c:\program files (x86)\vc\include\xmemory0(600) : see reference to function template instantiation 'std::pair<const _Kty,_Ty>::pair<std::basic_string<char,std::char_traits<char>,std::allocator<char>>&&,>(std::piecewise_construct_t,std::tuple<std::basic_string<char,std::char_traits<char>,std::allocator<char>> &&>,std::tuple<>)' being compiled
+                 with
+                 [
+                     _Kty=std::string
+         ,            _Ty=A
+                 ]
+                 c:\program files (x86)\vc\include\xmemory0(600) : see reference to function template instantiation 'std::pair<const _Kty,_Ty>::pair<std::basic_string<char,std::char_traits<char>,std::allocator<char>>&&,>(std::piecewise_construct_t,std::tuple<std::basic_string<char,std::char_traits<char>,std::allocator<char>> &&>,std::tuple<>)' being compiled
+                 with
+                 [
+                     _Kty=std::string
+         ,            _Ty=A
+                 ]
+                 c:\program files (x86)\vc\include\xmemory0(723) : see reference to function template instantiation 'void std::allocator<_Other>::construct<_Objty,const std::piecewise_construct_t&,_Ty,std::tuple<>>(_Objty *,const std::piecewise_construct_t &,_Ty &&,std::tuple<> &&)' being compiled
+                 with
+                 [
+                     _Other=std::_Tree_node<std::pair<const std::string,A>,void *>
+         ,            _Objty=std::pair<const std::string,A>
+         ,            _Ty=std::tuple<std::basic_string<char,std::char_traits<char>,std::allocator<char>> &&>
+                 ]
+                 c:\program files (x86)\vc\include\xmemory0(723) : see reference to function template instantiation 'void std::allocator<_Other>::construct<_Objty,const std::piecewise_construct_t&,_Ty,std::tuple<>>(_Objty *,const std::piecewise_construct_t &,_Ty &&,std::tuple<> &&)' being compiled
+                 with
+                 [
+                     _Other=std::_Tree_node<std::pair<const std::string,A>,void *>
+         ,            _Objty=std::pair<const std::string,A>
+         ,            _Ty=std::tuple<std::basic_string<char,std::char_traits<char>,std::allocator<char>> &&>
+                 ]
+                 c:\program files (x86)\vc\include\xmemory0(872) : see reference to function template instantiation 'void std::allocator_traits<_Alloc>::construct<_Ty,const std::piecewise_construct_t&,std::tuple<std::basic_string<char,std::char_traits<char>,std::allocator<char>> &&>,std::tuple<>>(std::allocator<_Other> &,_Objty *,const std::piecewise_construct_t &,std::tuple<std::basic_string<char,std::char_traits<char>,std::allocator<char>> &&> &&,std::tuple<> &&)' being compiled
+                 with
+                 [
+                     _Alloc=std::allocator<std::_Tree_node<std::pair<const std::string,A>,void *>>
+         ,            _Ty=std::pair<const std::string,A>
+         ,            _Other=std::_Tree_node<std::pair<const std::string,A>,void *>
+         ,            _Objty=std::pair<const std::string,A>
+                 ]
+                 c:\program files (x86)\vc\include\xmemory0(872) : see reference to function template instantiation 'void std::allocator_traits<_Alloc>::construct<_Ty,const std::piecewise_construct_t&,std::tuple<std::basic_string<char,std::char_traits<char>,std::allocator<char>> &&>,std::tuple<>>(std::allocator<_Other> &,_Objty *,const std::piecewise_construct_t &,std::tuple<std::basic_string<char,std::char_traits<char>,std::allocator<char>> &&> &&,std::tuple<> &&)' being compiled
+                 with
+                 [
+                     _Alloc=std::allocator<std::_Tree_node<std::pair<const std::string,A>,void *>>
+         ,            _Ty=std::pair<const std::string,A>
+         ,            _Other=std::_Tree_node<std::pair<const std::string,A>,void *>
+         ,            _Objty=std::pair<const std::string,A>
+                 ]
+                 c:\program files (x86)\vc\include\xtree(933) : see reference to function template instantiation 'void std::_Wrap_alloc<std::allocator<_Other>>::construct<_Ty,const std::piecewise_construct_t&,std::tuple<std::basic_string<char,std::char_traits<char>,std::allocator<char>> &&>,std::tuple<>>(_Ty *,const std::piecewise_construct_t &,std::tuple<std::basic_string<char,std::char_traits<char>,std::allocator<char>> &&> &&,std::tuple<> &&)' being compiled
+                 with
+                 [
+                     _Other=std::_Tree_node<std::pair<const std::string,A>,void *>
+         ,            _Ty=std::pair<const std::string,A>
+                 ]
+                 c:\program files (x86)\vc\include\xtree(933) : see reference to function template instantiation 'void std::_Wrap_alloc<std::allocator<_Other>>::construct<_Ty,const std::piecewise_construct_t&,std::tuple<std::basic_string<char,std::char_traits<char>,std::allocator<char>> &&>,std::tuple<>>(_Ty *,const std::piecewise_construct_t &,std::tuple<std::basic_string<char,std::char_traits<char>,std::allocator<char>> &&> &&,std::tuple<> &&)' being compiled
+                 with
+                 [
+                     _Other=std::_Tree_node<std::pair<const std::string,A>,void *>
+         ,            _Ty=std::pair<const std::string,A>
+                 ]
+                 c:\program files (x86)\vc\include\xtree(1184) : see reference to function template instantiation 'std::_Tree_node<std::pair<const _Kty,_Ty>,void *> *std::_Tree_buy<std::pair<const _Kty,_Ty>,std::allocator<std::pair<const _Kty,_Ty>>>::_Buynode<const std::piecewise_construct_t&,std::tuple<std::basic_string<char,std::char_traits<char>,std::allocator<char>> &&>,std::tuple<>>(const std::piecewise_construct_t &,std::tuple<std::basic_string<char,std::char_traits<char>,std::allocator<char>> &&> &&,std::tuple<> &&)' being compiled
+                 with
+                 [
+                     _Kty=std::string
+         ,            _Ty=A
+                 ]
+                 c:\program files (x86)\vc\include\xtree(1184) : see reference to function template instantiation 'std::_Tree_node<std::pair<const _Kty,_Ty>,void *> *std::_Tree_buy<std::pair<const _Kty,_Ty>,std::allocator<std::pair<const _Kty,_Ty>>>::_Buynode<const std::piecewise_construct_t&,std::tuple<std::basic_string<char,std::char_traits<char>,std::allocator<char>> &&>,std::tuple<>>(const std::piecewise_construct_t &,std::tuple<std::basic_string<char,std::char_traits<char>,std::allocator<char>> &&> &&,std::tuple<> &&)' being compiled
+                 with
+                 [
+                     _Kty=std::string
+         ,            _Ty=A
+                 ]
+                 c:\program files (x86)\vc\include\map(181) : see reference to function template instantiation 'std::_Tree_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const _Kty,_Ty>>>> std::_Tree<std::_Tmap_traits<_Kty,_Ty,_Pr,_Alloc,false>>::emplace_hint<const std::piecewise_construct_t&,std::tuple<std::basic_string<char,std::char_traits<char>,std::allocator<char>> &&>,std::tuple<>>(std::_Tree_const_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const _Kty,_Ty>>>>,const std::piecewise_construct_t &,std::tuple<std::basic_string<char,std::char_traits<char>,std::allocator<char>> &&> &&,std::tuple<> &&)' being compiled
+                 with
+                 [
+                     _Kty=std::string
+         ,            _Ty=A
+         ,            _Pr=std::less<std::string>
+         ,            _Alloc=std::allocator<std::pair<const std::string,A>>
+                 ]
+                 c:\program files (x86)\vc\include\map(181) : see reference to function template instantiation 'std::_Tree_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const _Kty,_Ty>>>> std::_Tree<std::_Tmap_traits<_Kty,_Ty,_Pr,_Alloc,false>>::emplace_hint<const std::piecewise_construct_t&,std::tuple<std::basic_string<char,std::char_traits<char>,std::allocator<char>> &&>,std::tuple<>>(std::_Tree_const_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const _Kty,_Ty>>>>,const std::piecewise_construct_t &,std::tuple<std::basic_string<char,std::char_traits<char>,std::allocator<char>> &&> &&,std::tuple<> &&)' being compiled
+                 with
+                 [
+                     _Kty=std::string
+         ,            _Ty=A
+         ,            _Pr=std::less<std::string>
+         ,            _Alloc=std::allocator<std::pair<const std::string,A>>
+                 ]
+                 c:\program files (x86)\vc\include\map(173) : while compiling class template member function 'A &std::map<std::string,A,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>::operator [](std::basic_string<char,std::char_traits<char>,std::allocator<char>> &&)'
+                 with
+                 [
+                     _Kty=std::string
+         ,            _Ty=A
+                 ]
+                 d:\study\course_work\course_work\course_work\index.cpp(42) : see reference to function template instantiation 'A &std::map<std::string,A,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>::operator [](std::basic_string<char,std::char_traits<char>,std::allocator<char>> &&)' being compiled
+                 with
+                 [
+                     _Kty=std::string
+         ,            _Ty=A
+                 ]
+                 d:\study\course_work\course_work\course_work\index.cpp(40) : see reference to class template instantiation 'std::map<std::string,A,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>' being compiled
+                 with
+                 [
+                     _Kty=std::string
+         ,            _Ty=A
+                 ]
+     1>Done Building Project "D:\Study\course_work\course_work\course_work\course_work.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.45
