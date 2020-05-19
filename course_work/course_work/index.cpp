@@ -8,6 +8,7 @@
 #include <vector>
 #include <cctype>
 #include <algorithm>
+#include <thread>
 #define START 2500
 #define END 2750
 // 10 000 - 11 000
@@ -66,8 +67,8 @@ string clean(string word)
 {
 	int n;
 	n = word.find('(');
-	if (n!= string::npos){
-		word.erase(n,n+1);
+	if (n != string::npos){
+		word.erase(n, n + 1);
 	}
 	n = word.find(')');
 	if (n != string::npos){
@@ -125,6 +126,22 @@ string clean(string word)
 	if (n != string::npos){
 		word.erase(n, n + 1);
 	}
+	n = word.find('\"');
+	if (n != string::npos){
+		word.erase(n, n + 1);
+		n = word.find('\"');
+		if (n != string::npos){
+			word.erase(n, n + 1);
+		}
+	}
+	n = word.find('\'');
+	if (n != string::npos && (n == 0 || n <= word.size()-1)){
+		word.erase(n, n + 1);
+		n = word.find('\'');
+		if (n != string::npos && (n == 0 || n <= word.size() - 1)){
+			word.erase(n, n + 1);
+		}
+	}
 	n = word.find("...");
 	if (n != string::npos){
 		word.erase(n,n+3);
@@ -135,7 +152,7 @@ string clean(string word)
 	return word;
 }
 
-void indexter(string path, int begin, int end)
+void indexer(string path, int begin, int end)
 {
 	int index = 0,i;
 	Pages p[1000];
@@ -163,43 +180,61 @@ void indexter(string path, int begin, int end)
 			{
 				fin >> word; // считать слово из файла
 				word = clean(word);
+				if (word.size() > 0)
+				{
+					auto it = dict.find(word);
+					if (it != dict.end())
+					{
+						if (!p[it->second].find(i))
+						{
+							p[it->second].add(i);
+						}
+					}
+					else
+					{
+						dict.insert(pair<string, int>(word, index));
+						p[index].add(i);
+						index++;
+					}
+				}
 			}
 			fin.close(); // закрываем файл
 		}
 	}
 }
 
+void router(int box1, int box2, int box3, int box4, int bigbox_start, int bigbox_end)
+{
+	if (box1)
+	{
+		indexer(path1, START, END);
+	}
+	if (box2)
+	{
+		indexer(path2, START, END);
+	}
+	if (box3)
+	{
+		indexer(path3, START, END);
+	}
+	if (box4)
+	{
+		indexer(path4, START, END);
+	}
+	if (bigbox_start < bigbox_end)
+	{
+		indexer(path1, bigbox_start, bigbox_end);
+	}
+}
+
+
 int main(){
 	
 	setlocale(LC_ALL, "rus");
-	//map <string, A> lol;
+	int n;
+	cout << "Enter number of threads:";
+	cin >> n;
 
-	/*if(lol["first"].sizeon()) cout<< "lol";
-	auto it = lol.find("first");
-	it->second.add(1);
-	it->second.add(2);
-	cout << it->first;
-	it->second.show();
-	/*_finddata_t data;
-	string buff;
-	buff = to_string(150);
-	buff = buff + "\*";
-	//cout << buff<<endl;
-	char a[10];
-	strcpy(a, buff.c_str());
-	//cout << a;
-	intptr_t handle = _findfirst(a,&data);
-	//cout << data.name<<endl;
-	ifstream fin(data.name);
-	
-	if (!fin.is_open()) // если файл не открыт
-		cout << "Файл не может быть открыт!\n"; // сообщить об этом
-	else
-	{
-		fin >> buff; // считали первое слово из файла
-		cout << buff << endl; // напечатали это слово
-		fin.close(); // закрываем файл
-	}*/
 		system("pause");
 		return 0;
 }
