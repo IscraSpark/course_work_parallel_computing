@@ -9,6 +9,7 @@
 #include <cctype>
 #include <algorithm>
 #include <thread>
+#include <mutex>
 #define START 2500
 #define END 2750
 // 10 000 - 11 000
@@ -16,8 +17,9 @@
 
 using namespace std;
 
+mutex mux;
 map <string, int> dictionary;
-int i;
+int iter = 0;
 string  path1 = "aclImdb\\test\\neg\\",
 		path2 = "aclImdb\\test\\pos\\",
 		path3 = "aclImdb\\train\\neg\\",
@@ -36,15 +38,17 @@ public:
 	void add(int el){
 		x.push_back(el);
 	}
+
 	void show()
 	{
 		for (int i = 0; i < x.size(); i++)
 			cout << x[i] <<" ";
 	}
+
 	int find(int page)
 	{
 		int flag = 0;
-		for (auto it = x.begin(); it <= x.end();it++)
+		for (auto it = x.begin(); it < x.end();it++)
 		{
 			if (*it == page)
 			{
@@ -54,14 +58,20 @@ public:
 		}
 		return flag;
 	}
-	int sizeon()
+
+	int sizev()
 	{
 		return x.size();
 	}
 
+	int get(int ind)
+	{
+		return x[ind];
+	}
+
 };
 
-Pages page[10000];
+Pages page[50000];
 
 string clean(string word)
 {
@@ -155,21 +165,24 @@ string clean(string word)
 void indexer(string path, int begin, int end)
 {
 	int index = 0,i;
-	Pages p[1000];
+	Pages p[50000];
 	map <string, int> dict;
 	for (i = begin; i <= end; i++)
 	{
+		cout << i << " ";
 		_finddata_t data;
 		string buff;
 		buff = to_string(i);
 		buff = path + buff + "\*";
 		//cout << buff<<endl;
-		char a[50];
+		char a[50],b[50];
 		strcpy(a, buff.c_str());
 		//cout << a;
 		intptr_t handle = _findfirst(a, &data);
+		buff = path + data.name;
+		strcpy(b, buff.c_str());
 		//cout << data.name<<endl;
-		ifstream fin(data.name);
+		ifstream fin(b);
 
 		if (!fin.is_open()) // если файл не открыт
 			cout << "Файл " << data.name << "отклыть не удалось"; // сообщить об этом
@@ -201,6 +214,39 @@ void indexer(string path, int begin, int end)
 			fin.close(); // закрываем файл
 		}
 	}
+	mux.lock();
+
+	for (auto it = dict.begin(); it != dict.end(); it++)
+	{
+		//dictionary.insert(pair<string, int>(it->first, iter));
+		auto iterator = dictionary.find(it->first);
+		if (iterator != dictionary.end())
+		{
+
+
+			for (i = 0; i < p[it->second].sizev(); i++)
+			{
+
+				if (!page[iterator->second].find(p[it->second].get(i)))
+				{
+					page[iterator->second].add(p[it->second].get(i));
+				}
+
+			}
+		}
+		else
+		{
+			dictionary.insert(pair<string, int>(it->first, iter));
+			for (i = 0; i < p[it->second].sizev(); i++)
+			{
+				page[iter].add(p[it->second].get(i));
+			}
+			iter++;
+		}
+	}
+	mux.unlock();
+
+
 }
 
 void router(int box1, int box2, int box3, int box4, int bigbox_start, int bigbox_end)
@@ -227,14 +273,129 @@ void router(int box1, int box2, int box3, int box4, int bigbox_start, int bigbox
 	}
 }
 
+void create_processes(int n)
+{
+	thread th[10];
+	if (n == 1)
+	{
+		router(1, 1, 1, 1, 10000, 11000);
+	}
+	if (n == 2)
+	{
+		th[0] = thread(router, 1, 1, 1, 1, 0, 0);
+		th[1] = thread(router, 0, 0, 0, 0, 10000, 11000);
+	}
+	if (n == 3)
+	{
+		th[0] = thread(router, 1, 1, 1, 0, 0, 0);
+		th[1] = thread(router, 0, 0, 0, 1, 10000, 10500);
+		th[2] = thread(router, 0, 0, 0, 0, 10501, 11000);
+	}
+	if (n == 4)
+	{
+		th[0] = thread(router, 1, 1, 0, 0, 0, 0);
+		th[1] = thread(router, 0, 0, 1, 1, 0, 0);
+		th[2] = thread(router, 0, 0, 0, 0, 10000, 10500);
+		th[3] = thread(router, 0, 0, 0, 0, 10501, 11000);
+	}
+	if (n == 5)
+	{
+		th[0] = thread(router, 1, 1, 0, 0, 0, 0);
+		th[1] = thread(router, 0, 0, 1, 1, 0, 0);
+		th[2] = thread(router, 0, 0, 0, 0, 10000, 10333);
+		th[3] = thread(router, 0, 0, 0, 0, 10334, 10666);
+		th[4] = thread(router, 0, 0, 0, 0, 10667, 11000);
+	}
+	if (n == 6)
+	{
+		th[0] = thread(router, 1, 1, 0, 0, 0, 0);
+		th[1] = thread(router, 0, 0, 1, 1, 0, 0);
+		th[2] = thread(router, 0, 0, 0, 0, 10000, 10250);
+		th[3] = thread(router, 0, 0, 0, 0, 10251, 10500);
+		th[4] = thread(router, 0, 0, 0, 0, 10501, 10750);
+		th[5] = thread(router, 0, 0, 0, 0, 10751, 11000);
+	}
+	if (n == 7)
+	{
+		th[0] = thread(router, 1, 0, 0, 0, 0, 0);
+		th[1] = thread(router, 0, 1, 0, 0, 0, 0);
+		th[2] = thread(router, 0, 0, 1, 0, 0, 0);
+		th[3] = thread(router, 0, 0, 0, 1, 0, 0);
+		th[4] = thread(router, 0, 0, 0, 0, 10000, 10333);
+		th[5] = thread(router, 0, 0, 0, 0, 10334, 10666);
+		th[6] = thread(router, 0, 0, 0, 0, 10667, 11000);
+	}
+	if (n == 8)
+	{
+		th[0] = thread(router, 1, 0, 0, 0, 0, 0);
+		th[1] = thread(router, 0, 1, 0, 0, 0, 0);
+		th[2] = thread(router, 0, 0, 1, 0, 0, 0);
+		th[3] = thread(router, 0, 0, 0, 1, 0, 0);
+		th[4] = thread(router, 0, 0, 0, 0, 10000, 10250);
+		th[5] = thread(router, 0, 0, 0, 0, 10251, 10500);
+		th[6] = thread(router, 0, 0, 0, 0, 10501, 10750);
+		th[7] = thread(router, 0, 0, 0, 0, 10751, 11000);
+	}
+	if (n == 9)
+	{
+		th[0] = thread(router, 1, 0, 0, 0, 0, 0);
+		th[1] = thread(router, 0, 1, 0, 0, 0, 0);
+		th[2] = thread(router, 0, 0, 1, 0, 0, 0);
+		th[3] = thread(router, 0, 0, 0, 1, 0, 0);
+		th[4] = thread(router, 0, 0, 0, 0, 10000, 10200);
+		th[5] = thread(router, 0, 0, 0, 0, 10201, 10400);
+		th[6] = thread(router, 0, 0, 0, 0, 10401, 10600);
+		th[7] = thread(router, 0, 0, 0, 0, 10601, 10800);
+		th[8] = thread(router, 0, 0, 0, 0, 10801, 11000);
+	}
+	if (n == 10)
+	{
+		th[0] = thread(router, 1, 0, 0, 0, 0, 0);
+		th[1] = thread(router, 0, 1, 0, 0, 0, 0);
+		th[2] = thread(router, 0, 0, 1, 0, 0, 0);
+		th[3] = thread(router, 0, 0, 0, 1, 0, 0);
+		th[4] = thread(router, 0, 0, 0, 0, 10000, 10166);
+		th[5] = thread(router, 0, 0, 0, 0, 10167, 10332);
+		th[6] = thread(router, 0, 0, 0, 0, 10333, 10500);
+		th[7] = thread(router, 0, 0, 0, 0, 10501, 10666);
+		th[8] = thread(router, 0, 0, 0, 0, 10667, 10832);
+		th[9] = thread(router, 0, 0, 0, 0, 10833, 11000);
+	}
+
+	for (int j = 0; j <= n; j++)
+	{
+		if (th[j].joinable())
+			th[j].join();
+	}
+}
 
 int main(){
 	
-	setlocale(LC_ALL, "rus");
+	//setlocale(LC_ALL, "rus");
 	int n;
+	
+	
 	cout << "Enter number of threads:";
 	cin >> n;
+	while (n <= 0)
+	{
+		cout << "Imposible, enter >0:";
+		cin >> n;
+	}
+	create_processes(n);
+	ofstream fout("result.txt");
+	for (auto it = dictionary.begin(); it != dictionary.end(); it++)
+	{
+		cout << it->first << ": ";
+		fout << it->first << ": ";
+		page[it->second].show();
+		for (int j = 0; j < page[it->second].sizev(); j++)
+			fout << page[it->second].get(j) << " ";
+		cout << endl;
+		fout << endl;
+	}
 
+	fout.close();
 		system("pause");
 		return 0;
 }
