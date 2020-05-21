@@ -75,7 +75,16 @@ Pages page[50000];
 
 string clean(string word)
 {
+	
 	int n;
+	n = word.find("<br />");
+	if (n != string::npos){
+		word.erase(n, n + 3);
+		n = word.find("<br />");
+		if (n != string::npos){
+			word.erase(n, n + 3);
+		}
+	}
 	n = word.find('(');
 	if (n != string::npos){
 		word.erase(n, n + 1);
@@ -136,6 +145,14 @@ string clean(string word)
 	if (n != string::npos){
 		word.erase(n, n + 1);
 	}
+	n = word.find('\\');
+	if (n != string::npos){
+		word.erase(n, n + 1);
+	}
+	n = word.find('/');
+	if (n != string::npos){
+		word.erase(n, n + 1);
+	}
 	n = word.find('\"');
 	if (n != string::npos){
 		word.erase(n, n + 1);
@@ -152,12 +169,26 @@ string clean(string word)
 			word.erase(n, n + 1);
 		}
 	}
+	n = word.find('*');
+	if (n != string::npos){
+		word.erase(n, n + 1);
+		n = word.find('*');
+		if (n != string::npos){
+			word.erase(n, n + 1);
+		}
+	}
 	n = word.find("...");
 	if (n != string::npos){
 		word.erase(n,n+3);
 	}
-
-	transform(word.begin(), word.end(), word.begin(), tolower);
+	for (int j = 0; j < word.size(); j++)
+	{
+		if (word[j] >= 65 && word[j] <= 90)
+		{
+			word[j] += 32;
+		}
+	}
+	//transform(word.begin(), word.end(), word.begin(), tolower);
 
 	return word;
 }
@@ -375,14 +406,16 @@ int main(){
 	int n;
 	
 	
-	cout << "Enter number of threads:";
+/*	cout << "Enter number of threads:";
 	cin >> n;
 	while (n <= 0)
 	{
 		cout << "Imposible, enter >0:";
 		cin >> n;
 	}
-	create_processes(n);
+	create_processes(n);*/
+
+	router(0, 0, 1, 1, 0, 0);
 	ofstream fout("result.txt");
 	for (auto it = dictionary.begin(); it != dictionary.end(); it++)
 	{
