@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <thread>
 #include <mutex>
+#include <fcntl.h> 
 #define START 2500
 #define END 2750
 // 10 000 - 11 000
@@ -18,7 +19,7 @@
 using namespace std;
 
 mutex mux;
-map <string, int> dictionary;
+map <wstring, int> dictionary;
 int iter = 0;
 string  path1 = "aclImdb\\test\\neg\\",
 		path2 = "aclImdb\\test\\pos\\",
@@ -42,7 +43,7 @@ public:
 	void show()
 	{
 		for (int i = 0; i < x.size(); i++)
-			cout << x[i] <<" ";
+			wcout << x[i] <<" ";
 	}
 
 	int find(int page)
@@ -73,112 +74,112 @@ public:
 
 Pages page[50000];
 
-string clean(string word)
+wstring clean(wstring word)
 {
 	
 	int n;
-	n = word.find("<br />");
-	if (n != string::npos){
+	n = word.find(L"<br />");
+	if (n != wstring::npos){
 		word.erase(n, n + 3);
-		n = word.find("<br />");
-		if (n != string::npos){
+		n = word.find(L"<br />");
+		if (n != wstring::npos){
 			word.erase(n, n + 3);
 		}
 	}
-	n = word.find('(');
-	if (n != string::npos){
+	n = word.find(L'(');
+	if (n != wstring::npos){
 		word.erase(n, n + 1);
 	}
-	n = word.find(')');
-	if (n != string::npos){
+	n = word.find(L')');
+	if (n != wstring::npos){
 		word.erase(n, n + 1);
 	}
-	n = word.find('(');
-	if (n != string::npos){
+	n = word.find(L'(');
+	if (n != wstring::npos){
 		word.erase(n, n + 1);
 	}
-	n = word.find('.');
-	if (n != string::npos){
+	n = word.find(L'.');
+	if (n != wstring::npos){
 		word.erase(n, n + 1);
 	}
-	n = word.find(',');
-	if (n != string::npos){
+	n = word.find(L',');
+	if (n != wstring::npos){
 		word.erase(n, n + 1);
 	}
-	n = word.find('[');
-	if (n != string::npos){
+	n = word.find(L'[');
+	if (n != wstring::npos){
 		word.erase(n, n + 1);
 	}
-	n = word.find(']');
-	if (n != string::npos){
+	n = word.find(L']');
+	if (n != wstring::npos){
 		word.erase(n, n + 1);
 	}
-	n = word.find(':');
-	if (n != string::npos){
+	n = word.find(L':');
+	if (n != wstring::npos){
 		word.erase(n, n + 1);
 	}
-	n = word.find(';');
-	if (n != string::npos){
+	n = word.find(L';');
+	if (n != wstring::npos){
 		word.erase(n, n + 1);
 	}
-	n = word.find('!');
-	if (n != string::npos){
+	n = word.find(L'!');
+	if (n != wstring::npos){
 		word.erase(n, n + 1);
 	}
-	n = word.find('?');
-	if (n != string::npos){
+	n = word.find(L'?');
+	if (n != wstring::npos){
 		word.erase(n, n + 1);
 	}
-	n = word.find('<');
-	if (n != string::npos){
+	n = word.find(L'<');
+	if (n != wstring::npos){
 		word.erase(n, n + 1);
 	}
-	n = word.find('>');
-	if (n != string::npos){
+	n = word.find(L'>');
+	if (n != wstring::npos){
 		word.erase(n, n + 1);
 	}
-	n = word.find('{');
-	if (n != string::npos){
+	n = word.find(L'{');
+	if (n != wstring::npos){
 		word.erase(n, n + 1);
 	}
-	n = word.find('}');
-	if (n != string::npos){
+	n = word.find(L'}');
+	if (n != wstring::npos){
 		word.erase(n, n + 1);
 	}
-	n = word.find('\\');
-	if (n != string::npos){
+	n = word.find(L'\\');
+	if (n != wstring::npos){
 		word.erase(n, n + 1);
 	}
-	n = word.find('/');
-	if (n != string::npos){
+	n = word.find(L'/');
+	if (n != wstring::npos){
 		word.erase(n, n + 1);
 	}
-	n = word.find('\"');
-	if (n != string::npos){
+	n = word.find(L'\"');
+	if (n != wstring::npos){
 		word.erase(n, n + 1);
-		n = word.find('\"');
-		if (n != string::npos){
+		n = word.find(L'\"');
+		if (n != wstring::npos){
 			word.erase(n, n + 1);
 		}
 	}
-	n = word.find('\'');
-	if (n != string::npos && (n == 0 || n <= word.size()-1)){
+	n = word.find(L'\'');
+	if (n != wstring::npos && (n == 0 || n <= word.size()-1)){
 		word.erase(n, n + 1);
-		n = word.find('\'');
-		if (n != string::npos && (n == 0 || n <= word.size() - 1)){
+		n = word.find(L'\'');
+		if (n != wstring::npos && (n == 0 || n <= word.size() - 1)){
 			word.erase(n, n + 1);
 		}
 	}
-	n = word.find('*');
-	if (n != string::npos){
+	n = word.find(L'*');
+	if (n != wstring::npos){
 		word.erase(n, n + 1);
-		n = word.find('*');
-		if (n != string::npos){
+		n = word.find(L'*');
+		if (n != wstring::npos){
 			word.erase(n, n + 1);
 		}
 	}
-	n = word.find("...");
-	if (n != string::npos){
+	n = word.find(L"...");
+	if (n != wstring::npos){
 		word.erase(n,n+3);
 	}
 	for (int j = 0; j < word.size(); j++)
@@ -197,7 +198,7 @@ void indexer(string path, int begin, int end)
 {
 	int index = 0,i;
 	Pages p[50000];
-	map <string, int> dict;
+	map <wstring, int> dict;
 	for (i = begin; i <= end; i++)
 	{
 		cout << i << " ";
@@ -211,15 +212,16 @@ void indexer(string path, int begin, int end)
 		//cout << a;
 		intptr_t handle = _findfirst(a, &data);
 		buff = path + data.name;
+		//cout << data.name << " ";
 		strcpy(b, buff.c_str());
 		//cout << data.name<<endl;
-		ifstream fin(b);
+		wifstream fin(b);
 
 		if (!fin.is_open()) // если файл не открыт
-			cout << "Файл " << data.name << "отклыть не удалось"; // сообщить об этом
+			cout << "Can't open: " << data.name; // сообщить об этом
 		else
 		{
-			string word;
+			wstring word;
 			while (!fin.eof())
 			{
 				fin >> word; // считать слово из файла
@@ -236,7 +238,7 @@ void indexer(string path, int begin, int end)
 					}
 					else
 					{
-						dict.insert(pair<string, int>(word, index));
+						dict.insert(pair<wstring, int>(word, index));
 						p[index].add(i);
 						index++;
 					}
@@ -267,7 +269,7 @@ void indexer(string path, int begin, int end)
 		}
 		else
 		{
-			dictionary.insert(pair<string, int>(it->first, iter));
+			dictionary.insert(pair<wstring, int>(it->first, iter));
 			for (i = 0; i < p[it->second].sizev(); i++)
 			{
 				page[iter].add(p[it->second].get(i));
@@ -279,6 +281,7 @@ void indexer(string path, int begin, int end)
 
 
 }
+
 
 void router(int box1, int box2, int box3, int box4, int bigbox_start, int bigbox_end)
 {
@@ -300,7 +303,7 @@ void router(int box1, int box2, int box3, int box4, int bigbox_start, int bigbox
 	}
 	if (bigbox_start < bigbox_end)
 	{
-		indexer(path1, bigbox_start, bigbox_end);
+		indexer(path5, bigbox_start, bigbox_end);
 	}
 }
 
@@ -406,25 +409,26 @@ int main(){
 	int n;
 	
 	
-/*	cout << "Enter number of threads:";
+	cout << "Enter number of threads:";
 	cin >> n;
 	while (n <= 0)
 	{
 		cout << "Imposible, enter >0:";
 		cin >> n;
 	}
-	create_processes(n);*/
+	create_processes(n);
+	
+	//router(0, 0, 0, 0, 10000, 11000);
 
-	router(0, 0, 1, 1, 0, 0);
-	ofstream fout("result.txt");
+	wofstream fout("result.txt");
 	for (auto it = dictionary.begin(); it != dictionary.end(); it++)
 	{
-		cout << it->first << ": ";
+		wcout << it->first << ": ";
 		fout << it->first << ": ";
 		page[it->second].show();
 		for (int j = 0; j < page[it->second].sizev(); j++)
 			fout << page[it->second].get(j) << " ";
-		cout << endl;
+		wcout << endl;
 		fout << endl;
 	}
 
