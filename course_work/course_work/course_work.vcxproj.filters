@@ -18,5 +18,13 @@
     <ClCompile Include="index.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="clean.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="clean.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

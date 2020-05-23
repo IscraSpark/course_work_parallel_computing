@@ -64,7 +64,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="clean.cpp" />
     <ClCompile Include="index.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="clean.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

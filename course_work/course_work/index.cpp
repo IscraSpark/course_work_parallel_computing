@@ -11,6 +11,8 @@
 #include <thread>
 #include <mutex>
 #include <fcntl.h> 
+#include <chrono>
+#include "clean.h"
 #define START 2500
 #define END 2750
 // 10 000 - 11 000
@@ -33,7 +35,7 @@ class Pages
 {
 	
 private:
-	vector<int> x;
+	vector<int> x;  // хранит страницы в которых встречалось слово
 public:
 	
 	void add(int el){
@@ -74,7 +76,7 @@ public:
 
 Pages page[50000];
 
-wstring clean(wstring word)
+/*wstring clean(wstring word)   // убирает нежелательные символы
 {
 	
 	int n;
@@ -192,7 +194,7 @@ wstring clean(wstring word)
 	//transform(word.begin(), word.end(), word.begin(), tolower);
 
 	return word;
-}
+}*/
 
 void indexer(string path, int begin, int end)
 {
@@ -205,12 +207,12 @@ void indexer(string path, int begin, int end)
 		_finddata_t data;
 		string buff;
 		buff = to_string(i);
-		buff = path + buff + "\*";
+		buff = path + buff + "\*"; // запись пути к файлу
 		//cout << buff<<endl;
 		char a[50],b[50];
 		strcpy(a, buff.c_str());
 		//cout << a;
-		intptr_t handle = _findfirst(a, &data);
+		intptr_t handle = _findfirst(a, &data); // поиск нужного файла
 		buff = path + data.name;
 		//cout << data.name << " ";
 		strcpy(b, buff.c_str());
@@ -222,13 +224,13 @@ void indexer(string path, int begin, int end)
 		else
 		{
 			wstring word;
-			while (!fin.eof())
+			while (!fin.eof())  // заполнение вспомагательного словаря
 			{
 				fin >> word; // считать слово из файла
 				word = clean(word);
 				if (word.size() > 0)
 				{
-					auto it = dict.find(word);
+					auto it = dict.find(word); // проверка, встечалось ли это слово ранее
 					if (it != dict.end())
 					{
 						if (!p[it->second].find(i))
@@ -248,7 +250,7 @@ void indexer(string path, int begin, int end)
 		}
 	}
 	mux.lock();
-
+	// перенос данных в основной словарь
 	for (auto it = dict.begin(); it != dict.end(); it++)
 	{
 		//dictionary.insert(pair<string, int>(it->first, iter));
@@ -283,7 +285,7 @@ void indexer(string path, int begin, int end)
 }
 
 
-void router(int box1, int box2, int box3, int box4, int bigbox_start, int bigbox_end)
+void router(int box1, int box2, int box3, int box4, int bigbox_start, int bigbox_end) // указывает путь и количество данных которые нужно обработать
 {
 	if (box1)
 	{
@@ -307,7 +309,7 @@ void router(int box1, int box2, int box3, int box4, int bigbox_start, int bigbox
 	}
 }
 
-void create_processes(int n)
+void create_processes(int n) // распределяет задания между потоками
 {
 	thread th[10];
 	if (n == 1)
@@ -382,7 +384,7 @@ void create_processes(int n)
 		th[7] = thread(router, 0, 0, 0, 0, 10601, 10800);
 		th[8] = thread(router, 0, 0, 0, 0, 10801, 11000);
 	}
-	if (n == 10)
+	if (n >= 10)
 	{
 		th[0] = thread(router, 1, 0, 0, 0, 0, 0);
 		th[1] = thread(router, 0, 1, 0, 0, 0, 0);
@@ -395,8 +397,8 @@ void create_processes(int n)
 		th[8] = thread(router, 0, 0, 0, 0, 10667, 10832);
 		th[9] = thread(router, 0, 0, 0, 0, 10833, 11000);
 	}
-
-	for (int j = 0; j <= n; j++)
+	if (n > 10) n = 10;
+	for (int j = 0; j < n; j++)
 	{
 		if (th[j].joinable())
 			th[j].join();
@@ -407,6 +409,7 @@ int main(){
 	
 	//setlocale(LC_ALL, "rus");
 	int n;
+	chrono::system_clock::time_point start = chrono::system_clock::now();
 	
 	
 	cout << "Enter number of threads:";
@@ -416,12 +419,13 @@ int main(){
 		cout << "Imposible, enter >0:";
 		cin >> n;
 	}
+
 	create_processes(n);
 	
 	//router(0, 0, 0, 0, 10000, 11000);
 
 	wofstream fout("result.txt");
-	for (auto it = dictionary.begin(); it != dictionary.end(); it++)
+	for (auto it = dictionary.begin(); it != dictionary.end(); it++)  // вывод сформированого словаря
 	{
 		wcout << it->first << ": ";
 		fout << it->first << ": ";
@@ -433,6 +437,9 @@ int main(){
 	}
 
 	fout.close();
+	auto end = chrono::system_clock::now();
+	auto diff = chrono::duration_cast <chrono::seconds > (end - start).count();
+	cout << "Work time:" << diff;
 		system("pause");
 		return 0;
 }
