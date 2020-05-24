@@ -1,32 +1,9 @@
-﻿Build started 23.05.2020 19:09:33.
+﻿Build started 24.05.2020 17:48:48.
      1>Project "D:\Study\course_work\course_work\course_work\course_work.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt pages.cpp
-         pages.cpp
-     1>d:\study\course_work\course_work\course_work\pages.cpp(6): error C2589: 'void' : illegal token on right side of '::'
-     1>d:\study\course_work\course_work\course_work\pages.cpp(6): error C2059: syntax error : '::'
-     1>d:\study\course_work\course_work\course_work\pages.cpp(6): error C2143: syntax error : missing ';' before '{'
-     1>d:\study\course_work\course_work\course_work\pages.cpp(6): error C2447: '{' : missing function header (old-style formal list?)
-     1>d:\study\course_work\course_work\course_work\pages.cpp(10): error C2589: 'void' : illegal token on right side of '::'
-     1>d:\study\course_work\course_work\course_work\pages.cpp(10): error C2059: syntax error : '::'
-     1>d:\study\course_work\course_work\course_work\pages.cpp(11): error C2143: syntax error : missing ';' before '{'
-     1>d:\study\course_work\course_work\course_work\pages.cpp(11): error C2447: '{' : missing function header (old-style formal list?)
-     1>d:\study\course_work\course_work\course_work\pages.cpp(16): error C2589: 'int' : illegal token on right side of '::'
-     1>d:\study\course_work\course_work\course_work\pages.cpp(16): error C2059: syntax error : '::'
-     1>d:\study\course_work\course_work\course_work\pages.cpp(17): error C2143: syntax error : missing ';' before '{'
-     1>d:\study\course_work\course_work\course_work\pages.cpp(17): error C2447: '{' : missing function header (old-style formal list?)
-     1>d:\study\course_work\course_work\course_work\pages.cpp(30): error C2589: 'int' : illegal token on right side of '::'
-     1>d:\study\course_work\course_work\course_work\pages.cpp(30): error C2059: syntax error : '::'
-     1>d:\study\course_work\course_work\course_work\pages.cpp(31): error C2143: syntax error : missing ';' before '{'
-     1>d:\study\course_work\course_work\course_work\pages.cpp(31): error C2447: '{' : missing function header (old-style formal list?)
-     1>d:\study\course_work\course_work\course_work\pages.cpp(35): error C2589: 'int' : illegal token on right side of '::'
-     1>d:\study\course_work\course_work\course_work\pages.cpp(35): error C2059: syntax error : '::'
-     1>d:\study\course_work\course_work\course_work\pages.cpp(36): error C2143: syntax error : missing ';' before '{'
-     1>d:\study\course_work\course_work\course_work\pages.cpp(36): error C2447: '{' : missing function header (old-style formal list?)
-     1>d:\study\course_work\course_work\course_work\pages.cpp(40): error C2059: syntax error : '}'
-     1>d:\study\course_work\course_work\course_work\pages.cpp(40): error C2143: syntax error : missing ';' before '}'
-     1>Done Building Project "D:\Study\course_work\course_work\course_work\course_work.vcxproj" (Build target(s)) -- FAILED.
+     1>Link:
+         course_work.vcxproj -> D:\Study\course_work\course_work\Debug\course_work.exe
+     1>Done Building Project "D:\Study\course_work\course_work\course_work\course_work.vcxproj" (Build target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:00.32
+Time Elapsed 00:00:00.04

@@ -203,7 +203,7 @@ void indexer(string path, int begin, int end)
 	map <wstring, int> dict;
 	for (i = begin; i <= end; i++)
 	{
-		cout << i << " ";
+		//cout << i << " ";
 		_finddata_t data;
 		string buff;
 		buff = to_string(i);
@@ -427,12 +427,12 @@ int main(){
 	wofstream fout("result.txt");
 	for (auto it = dictionary.begin(); it != dictionary.end(); it++)  // вывод сформированого словаря
 	{
-		wcout << it->first << ": ";
+		//wcout << it->first << ": ";
 		fout << it->first << ": ";
-		page[it->second].show();
+		//page[it->second].show();
 		for (int j = 0; j < page[it->second].sizev(); j++)
 			fout << page[it->second].get(j) << " ";
-		wcout << endl;
+		//wcout << endl;
 		fout << endl;
 	}
 
